@@ -1,0 +1,9 @@
+# Screenshot output from screenshot.mjs — regenerated on demand
+temporary screenshots/
+
+# Third-party reference capture used only during design, not part of the site
+www.automatezai.com_.png
+
+node_modules/
+.DS_Store
+Thumbs.db

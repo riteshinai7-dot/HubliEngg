@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HubliEngg — Bold · Precise · Engineered for Trust</title>
+<meta name="description" content="HubliEngg is a multi-discipline engineering consultancy delivering structural, mechanical, electrical and automation solutions with precision since 2021." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy:   '#000080',
+          dblue:  '#0B1A3A',
+          mblue:  '#1C2F5E',
+          teal:   '#1F4A4A',
+          dgrey:  '#2B2F36',
+          lgrey:  '#C9CCD1',
+          orange: '#E07B28',
+        },
+        fontFamily: {
+          sans: ['Montserrat', 'sans-serif'],
+          mono: ['"Roboto Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  :root{
+    /* ---- brand palette, exact values from brand_guidelines.png ---- */
+    --navy:#000080;
+    --white:#FFFFFF;
+    --dblue:#0B1A3A;
+    --mblue:#1C2F5E;
+    --teal:#1F4A4A;
+    --dgrey:#2B2F36;
+    --lgrey:#C9CCD1;
+    --orange:#E07B28;
+
+    /* ---- tints derived from --navy (no new brand hues introduced) ---- */
+    --navy-lift:#1B24A8;   /* navy + white 13% : gradient tops, borders  */
+    --navy-glow:#3A46E0;   /* navy + white 28% : radial glows on black   */
+    --navy-tint:#A7ADE6;   /* navy + white 65% : accent text on dark     */
+    --navy-wash:#ECEDFA;   /* navy + white 92% : icon tiles on white     */
+
+    /* ---- surfaces ---- */
+    --ink:#05070F;         /* near-black ground, derived from --dblue    */
+    --ink-card:#0C0F1C;    /* elevated card on ink                       */
+    --paper:#FFFFFF;
+    --paper-alt:#F7F8FA;   /* off-white band                             */
+    --line-dark:rgba(201,204,209,.12);
+    --line-light:#E4E6EB;
+
+    --ease-spring:cubic-bezier(.22,1,.36,1);
+  }
+
+  html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--dgrey);
+    font-family:'Montserrat',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--navy); color:#fff; }
+
+  /* ================= shared type ================= */
+  .h-xl{ font-weight:700; letter-spacing:-.025em; line-height:1.14; font-size:clamp(2.4rem,4.7vw,3.9rem); }
+  .h-lg{ font-weight:700; letter-spacing:-.02em; line-height:1.15; font-size:clamp(2rem,3.6vw,2.9rem); }
+  .h-md{ font-weight:700; letter-spacing:-.015em; line-height:1.2;  font-size:clamp(1.5rem,2.2vw,2.15rem); }
+  .h-sm{ font-weight:700; letter-spacing:-.01em;  line-height:1.3;  font-size:1.35rem; }
+  .lede{ font-size:clamp(1.0625rem,1.4vw,1.1875rem); line-height:1.65; }
+
+  .mono-label{
+    font-family:'Roboto Mono',monospace; font-weight:500;
+    font-size:.75rem; letter-spacing:.16em; text-transform:uppercase;
+  }
+
+  /* ================= dark ground + capsule field ================= */
+  .ink{ background:var(--ink); color:var(--lgrey); position:relative; overflow:hidden; }
+  .ink .grain{
+    position:absolute; inset:0; pointer-events:none; z-index:1;
+    opacity:.055; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .capsules{ position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+  .cap-shape{
+    position:absolute; border-radius:999px;
+    background:linear-gradient(105deg, rgba(0,0,128,.20) 0%, rgba(27,36,168,.10) 45%, rgba(12,15,28,0) 100%);
+    border:1px solid rgba(167,173,230,.07);
+    box-shadow:0 0 70px -26px rgba(58,70,224,.22), 0 0 150px -60px rgba(0,0,128,.35);
+  }
+
+  /* ================= buttons (brand pill, per guidelines) ================= */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+    font-family:'Roboto Mono',monospace; font-weight:500;
+    font-size:.75rem; letter-spacing:.16em; text-transform:uppercase;
+    border-radius:999px; padding:1.05rem 2.25rem; white-space:nowrap;
+    transition:transform .45s var(--ease-spring), box-shadow .45s var(--ease-spring),
+               background-color .35s var(--ease-spring), color .35s var(--ease-spring),
+               border-color .35s var(--ease-spring);
+    will-change:transform;
+  }
+  .btn:focus-visible{ outline:2px solid var(--orange); outline-offset:3px; }
+  .btn .arw{ transition:transform .45s var(--ease-spring); }
+  .btn:hover .arw{ transform:translateX(4px); }
+
+  .btn-solid{
+    color:#fff;
+    background:linear-gradient(180deg, var(--navy-lift) 0%, var(--navy) 62%, #00005E 100%);
+    border:1px solid rgba(167,173,230,.4);
+    box-shadow:0 12px 34px -12px rgba(0,0,160,.9), 0 0 46px -10px rgba(58,70,224,.55),
+               0 1px 0 rgba(255,255,255,.26) inset;
+  }
+  .btn-solid:hover{
+    transform:translateY(-2px);
+    box-shadow:0 20px 46px -14px rgba(0,0,180,.95), 0 0 74px -8px rgba(58,70,224,.72),
+               0 1px 0 rgba(255,255,255,.32) inset;
+  }
+  .btn-solid:active{ transform:translateY(0) scale(.985); }
+
+  .btn-fade{ /* reference's dark→accent gradient button */
+    color:#fff;
+    background:linear-gradient(90deg, rgba(12,15,28,.9) 0%, var(--navy) 100%);
+    border:1px solid rgba(167,173,230,.28);
+    box-shadow:0 12px 30px -16px rgba(0,0,128,.9), 0 1px 0 rgba(255,255,255,.14) inset;
+  }
+  .btn-fade:hover{ transform:translateY(-2px); border-color:rgba(167,173,230,.5);
+    box-shadow:0 20px 42px -18px rgba(0,0,150,.95), 0 1px 0 rgba(255,255,255,.2) inset; }
+  .btn-fade:active{ transform:translateY(0) scale(.985); }
+
+  .btn-onlight{
+    color:#fff;
+    background:linear-gradient(180deg, var(--navy-lift) 0%, var(--navy) 100%);
+    border:1px solid transparent;
+    box-shadow:0 12px 28px -14px rgba(0,0,128,.55);
+  }
+  .btn-onlight:hover{ transform:translateY(-2px); box-shadow:0 20px 38px -16px rgba(0,0,128,.7); }
+  .btn-onlight:active{ transform:translateY(0) scale(.985); }
+
+  /* ================= nav ================= */
+  .nav-link{
+    font-size:.95rem; font-weight:500; color:rgba(255,255,255,.86);
+    position:relative; padding:.35rem 0;
+    transition:color .3s var(--ease-spring);
+  }
+  .nav-link::after{
+    content:''; position:absolute; left:0; right:0; bottom:-1px; height:1.5px;
+    background:var(--navy-tint); transform:scaleX(0); transform-origin:right;
+    transition:transform .4s var(--ease-spring);
+  }
+  .nav-link:hover{ color:#fff; }
+  .nav-link:hover::after{ transform:scaleX(1); transform-origin:left; }
+  .nav-link:focus-visible{ outline:2px solid var(--orange); outline-offset:5px; border-radius:2px; color:#fff; }
+
+  /* ================= cards ================= */
+  .stat-card{
+    background:var(--ink-card);
+    border:1px solid var(--line-dark);
+    border-radius:16px;
+    transition:transform .5s var(--ease-spring), border-color .4s var(--ease-spring), box-shadow .5s var(--ease-spring);
+  }
+  .stat-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(167,173,230,.35);
+    box-shadow:0 30px 60px -34px rgba(0,0,128,.95), 0 0 70px -44px rgba(58,70,224,.6);
+  }
+
+  .svc-card{
+    background:var(--paper);
+    border:1px solid var(--line-light);
+    border-radius:18px;
+    box-shadow:0 1px 2px rgba(11,26,58,.04), 0 12px 28px -22px rgba(11,26,58,.28);
+    transition:transform .5s var(--ease-spring), box-shadow .5s var(--ease-spring), border-color .4s var(--ease-spring);
+  }
+  .svc-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(0,0,128,.22);
+    box-shadow:0 2px 4px rgba(11,26,58,.05), 0 26px 50px -26px rgba(0,0,128,.32);
+  }
+  .icon-tile{
+    width:5.25rem; height:5.25rem; border-radius:14px;
+    background:var(--navy-wash); border:1px solid rgba(0,0,128,.1);
+    display:grid; place-items:center; color:var(--navy);
+  }
+
+  .quote-card{
+    background:var(--paper);
+    border:1px solid var(--line-light);
+    border-radius:12px;
+    transition:transform .5s var(--ease-spring), box-shadow .5s var(--ease-spring), border-color .4s var(--ease-spring);
+  }
+  .quote-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(0,0,128,.2);
+    box-shadow:0 20px 40px -28px rgba(11,26,58,.4);
+  }
+
+  .divider-bar{ width:100px; height:3px; border-radius:999px; background:var(--navy); margin-inline:auto; }
+
+  /* ================= services marquee ================= */
+  .track{ display:flex; width:max-content; gap:1.75rem; animation:slide 46s linear infinite; }
+  @keyframes slide{ from{ transform:translateX(0);} to{ transform:translateX(calc(-50% - .875rem));} }
+  .marquee-wrap:hover .track,
+  .marquee-wrap:focus-within .track{ animation-play-state:paused; }
+
+  .strip{ display:flex; width:max-content; animation:slide2 30s linear infinite; }
+  @keyframes slide2{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  /* ================= links ================= */
+  .u-link{ position:relative; transition:color .3s var(--ease-spring); }
+  .u-link::after{
+    content:''; position:absolute; left:0; bottom:-3px; height:1px; width:100%;
+    background:currentColor; transform:scaleX(0); transform-origin:right;
+    transition:transform .4s var(--ease-spring);
+  }
+  .u-link:hover::after{ transform:scaleX(1); transform-origin:left; }
+  .u-link:focus-visible{ outline:2px solid var(--orange); outline-offset:4px; border-radius:2px; }
+
+  /* ================= reveals ================= */
+  .rv{ opacity:0; transform:translateY(24px); transition:opacity .85s var(--ease-spring), transform .85s var(--ease-spring); }
+  .rv-s{ opacity:0; transform:scale(.97); transition:opacity .9s var(--ease-spring), transform .9s var(--ease-spring); }
+  .is-in{ opacity:1 !important; transform:none !important; }
+
+  @media (prefers-reduced-motion: reduce){
+    .rv,.rv-s{ opacity:1 !important; transform:none !important; transition:none !important; }
+    .track,.strip{ animation:none; }
+    *{ scroll-behavior:auto !important; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ===================== NAV (dark on every section) ===================== -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="backdrop-blur-xl border-b border-[rgba(201,204,209,.1)]" style="background:rgba(5,7,15,.94);">
+    <nav class="mx-auto max-w-[1180px] px-6 lg:px-8 h-[84px] flex items-center justify-between gap-6">
+      <a href="#top" class="shrink-0 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-4" aria-label="HubliEngg home">
+        <img src="brand_assets/brand_logo.png" alt="HubliEngg" class="h-9 w-auto -my-2" />
+      </a>
+
+      <div class="hidden lg:flex items-center gap-9">
+        <a href="#top" class="nav-link">Home</a>
+        <a href="#capabilities" class="nav-link">Capabilities</a>
+        <a href="#process" class="nav-link">Process</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#testimonials" class="nav-link">Testimonials</a>
+        <a href="#about" class="nav-link">About Us</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="btn btn-solid !py-3 !px-6 !text-[.7rem]">Let's talk</a>
+        <button id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu"
+                class="lg:hidden grid place-items-center h-11 w-11 rounded-full border border-[rgba(201,204,209,.24)] transition-[transform,border-color,background-color] duration-300 hover:border-[rgba(167,173,230,.8)] hover:bg-[rgba(0,0,128,.25)] active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="block w-4 space-y-[5px]" aria-hidden="true">
+            <span class="block h-px bg-[rgba(255,255,255,.9)]"></span>
+            <span class="block h-px bg-[rgba(255,255,255,.9)]"></span>
+            <span class="block h-px bg-[rgba(255,255,255,.9)]"></span>
+          </span>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" hidden class="lg:hidden bg-[#05070F] border-t border-[rgba(201,204,209,.1)] px-6 pb-7 pt-4">
+      <ul class="grid">
+        <li><a href="#top" data-close class="nav-link block py-3">Home</a></li>
+        <li><a href="#capabilities" data-close class="nav-link block py-3">Capabilities</a></li>
+        <li><a href="#process" data-close class="nav-link block py-3">Process</a></li>
+        <li><a href="#projects" data-close class="nav-link block py-3">Projects</a></li>
+        <li><a href="#testimonials" data-close class="nav-link block py-3">Testimonials</a></li>
+        <li><a href="#about" data-close class="nav-link block py-3">About Us</a></li>
+      </ul>
+      <p class="mono-label mt-5 text-[rgba(201,204,209,.55)] !text-[.6875rem]">Estd. 2021 · Hubli, KA</p>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="ink pt-[168px] lg:pt-[210px] pb-[96px]">
+    <div class="capsules" aria-hidden="true">
+      <div class="cap-shape" style="width:640px;height:150px;top:-40px;left:-180px;transform:rotate(-24deg);"></div>
+      <div class="cap-shape" style="width:520px;height:130px;top:20px;right:-140px;transform:rotate(-14deg);"></div>
+      <div class="cap-shape" style="width:430px;height:112px;top:520px;left:60px;transform:rotate(-20deg);opacity:.8;"></div>
+      <div class="cap-shape" style="width:600px;height:140px;top:470px;right:-120px;transform:rotate(-16deg);opacity:.85;"></div>
+      <div class="cap-shape" style="width:300px;height:88px;top:300px;left:46%;transform:rotate(-30deg);opacity:.5;"></div>
+    </div>
+    <div class="grain"></div>
+
+    <div class="relative z-10 mx-auto max-w-[1180px] px-6 lg:px-8 text-center">
+
+      <span class="rv inline-flex items-center gap-2.5 rounded-full border border-[rgba(167,173,230,.28)] bg-[rgba(12,15,28,.7)] px-5 py-2.5 backdrop-blur-sm">
+        <span class="h-1.5 w-1.5 rounded-full bg-[var(--navy-tint)]"></span>
+        <span class="text-[.875rem] text-[rgba(255,255,255,.82)]">HubliEngg</span>
+      </span>
+
+      <h1 class="h-xl mt-9 text-white max-w-[54rem] mx-auto rv" style="transition-delay:.08s">
+        <span class="block">Transform Your</span>
+        <span class="block">Operations</span>
+        <span class="block text-[var(--navy-tint)]">with Precision Engineering</span>
+      </h1>
+
+      <p class="lede mt-7 mx-auto max-w-[38rem] text-[rgba(201,204,209,.72)] rv" style="transition-delay:.16s">
+        Multi-discipline engineering for businesses ready to cut risk, shorten timelines,
+        and build it right the first time.
+      </p>
+
+      <div class="mt-11 flex flex-wrap items-center justify-center gap-4 rv" style="transition-delay:.24s">
+        <a href="#capabilities" class="btn btn-fade">Explore capabilities</a>
+        <a href="#contact" class="btn btn-solid">Book a call <span class="arw">→</span></a>
+      </div>
+
+      <!-- stat cards: 2 across, third on the left below (reference layout) -->
+      <div class="mt-[104px] grid sm:grid-cols-2 gap-5 text-left">
+        <div class="stat-card p-8 rv-s">
+          <span class="block text-[var(--navy-tint)] text-xl leading-none" aria-hidden="true">↗</span>
+          <p class="mt-10 text-center text-white font-bold text-[2.75rem] leading-none tabular-nums">
+            <span class="count" data-to="240">0</span>+
+          </p>
+          <p class="mono-label mt-3 text-center text-[rgba(201,204,209,.62)]">Projects delivered</p>
+        </div>
+
+        <div class="stat-card p-8 rv-s" style="transition-delay:.08s">
+          <span class="block text-[var(--navy-tint)] text-xl leading-none" aria-hidden="true">↗</span>
+          <p class="mt-10 text-center text-white font-bold text-[2.75rem] leading-none tabular-nums">
+            <span class="count" data-to="98">0</span>%
+          </p>
+          <p class="mono-label mt-3 text-center text-[rgba(201,204,209,.62)]">On-schedule handover</p>
+        </div>
+
+        <div class="stat-card p-8 rv-s" style="transition-delay:.16s">
+          <span class="block text-[var(--navy-tint)] text-xl leading-none" aria-hidden="true">↗</span>
+          <p class="mt-10 text-center text-white font-bold text-[2.75rem] leading-none tabular-nums">
+            <span class="count" data-to="30">0</span>+
+          </p>
+          <p class="mono-label mt-3 text-center text-[rgba(201,204,209,.62)]">Industries served</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPABILITIES (light) ===================== -->
+  <section id="capabilities" class="bg-white py-[104px] lg:py-[128px] scroll-mt-20 overflow-hidden">
+    <div class="mx-auto max-w-[1180px] px-6 lg:px-8 text-center">
+      <h2 class="h-lg text-[var(--navy)] rv">Engineering Built for Impact</h2>
+      <p class="lede mt-6 mx-auto max-w-[46rem] text-[rgba(43,47,54,.72)] rv" style="transition-delay:.08s">
+        Built for teams ready to move fast, cut rework, and commission on time. Structural,
+        mechanical, electrical and automation — coordinated by one accountable office.
+      </p>
+      <div class="divider-bar mt-10 rv" style="transition-delay:.16s"></div>
+    </div>
+
+    <div class="marquee-wrap mt-16 rv" style="transition-delay:.2s">
+      <div class="track px-6">
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9">
+          <span class="icon-tile" aria-hidden="true">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Structural &amp; Civil Design</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            RCC and steel frame design, industrial sheds, foundations for heavy plant, retrofit
+            and load-capacity assessment — issued as stamped drawings your contractor can build
+            from without an RFI loop.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9">
+          <span class="icon-tile" aria-hidden="true">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3.2"/>
+              <path d="M12 2v3.2M12 18.8V22M22 12h-3.2M5.2 12H2M18.7 5.3l-2.3 2.3M7.6 16.4l-2.3 2.3M18.7 18.7l-2.3-2.3M7.6 7.6L5.3 5.3"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Mechanical &amp; Fabrication</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            Layout engineering, material handling, pressure parts and jig design — with vendor
+            drawings and weld procedures reviewed before a single cut is made on the shop floor.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9">
+          <span class="icon-tile" aria-hidden="true">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Electrical &amp; Instrumentation</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            LT/HT distribution, load studies, earthing and lightning protection, panel schedules
+            and full instrumentation loop documentation — coordinated with the civil package.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9">
+          <span class="icon-tile" aria-hidden="true">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="7" width="18" height="11" rx="2"/>
+              <path d="M7 7V4.5M12 7V4.5M17 7V4.5M7.5 12h3M13.5 12h3"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Industrial Automation</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            PLC and SCADA architecture, retrofit of legacy lines, and OEE instrumentation that
+            turns a shop floor into data you can actually act on.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9">
+          <span class="icon-tile" aria-hidden="true">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 3h6l1 3h3v15H5V6h3l1-3Z"/><path d="M9 12.5l2 2 4-4"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">PMC &amp; Compliance</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            Project management consultancy, statutory approvals, factory licensing and safety
+            audits — documented to survive an inspection, not just pass one.
+          </p>
+        </article>
+
+        <!-- duplicate set for a seamless loop -->
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9" aria-hidden="true">
+          <span class="icon-tile">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Structural &amp; Civil Design</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            RCC and steel frame design, industrial sheds, foundations for heavy plant, retrofit
+            and load-capacity assessment — issued as stamped drawings your contractor can build
+            from without an RFI loop.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9" aria-hidden="true">
+          <span class="icon-tile">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3.2"/>
+              <path d="M12 2v3.2M12 18.8V22M22 12h-3.2M5.2 12H2M18.7 5.3l-2.3 2.3M7.6 16.4l-2.3 2.3M18.7 18.7l-2.3-2.3M7.6 7.6L5.3 5.3"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Mechanical &amp; Fabrication</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            Layout engineering, material handling, pressure parts and jig design — with vendor
+            drawings and weld procedures reviewed before a single cut is made on the shop floor.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9" aria-hidden="true">
+          <span class="icon-tile">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Electrical &amp; Instrumentation</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            LT/HT distribution, load studies, earthing and lightning protection, panel schedules
+            and full instrumentation loop documentation — coordinated with the civil package.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9" aria-hidden="true">
+          <span class="icon-tile">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="7" width="18" height="11" rx="2"/>
+              <path d="M7 7V4.5M12 7V4.5M17 7V4.5M7.5 12h3M13.5 12h3"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">Industrial Automation</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            PLC and SCADA architecture, retrofit of legacy lines, and OEE instrumentation that
+            turns a shop floor into data you can actually act on.
+          </p>
+        </article>
+
+        <article class="svc-card shrink-0 w-[340px] sm:w-[420px] min-h-[430px] p-9" aria-hidden="true">
+          <span class="icon-tile">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 3h6l1 3h3v15H5V6h3l1-3Z"/><path d="M9 12.5l2 2 4-4"/>
+            </svg>
+          </span>
+          <h3 class="h-sm mt-7 text-[var(--dblue)]">PMC &amp; Compliance</h3>
+          <p class="mt-4 text-[1.0625rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+            Project management consultancy, statutory approvals, factory licensing and safety
+            audits — documented to survive an inspection, not just pass one.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESS (dark) ===================== -->
+  <section id="process" class="ink py-[104px] lg:py-[128px] scroll-mt-20">
+    <div class="capsules" aria-hidden="true">
+      <div class="cap-shape" style="width:520px;height:126px;top:60px;left:-190px;transform:rotate(-22deg);opacity:.75;"></div>
+      <div class="cap-shape" style="width:600px;height:140px;bottom:40px;right:-200px;transform:rotate(-16deg);opacity:.7;"></div>
+    </div>
+    <div class="grain"></div>
+
+    <div class="relative z-10 mx-auto max-w-[1180px] px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="h-lg text-white rv">A Method, Not a Proposal Template</h2>
+        <p class="lede mt-6 mx-auto max-w-[44rem] text-[rgba(201,204,209,.7)] rv" style="transition-delay:.08s">
+          Four stages, each with a defined deliverable. You always know what you are getting
+          and when it lands.
+        </p>
+        <div class="divider-bar mt-10 !bg-[var(--navy-tint)] rv" style="transition-delay:.16s"></div>
+      </div>
+
+      <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="stat-card p-8 rv-s">
+          <span class="mono-label text-[var(--navy-tint)]">Step 01</span>
+          <h3 class="h-sm mt-5 text-white">Site &amp; scope study</h3>
+          <p class="mt-4 text-[1rem] leading-[1.7] text-[rgba(201,204,209,.68)]">
+            We walk the site, measure what exists and write down the constraints everyone
+            already knows but nobody documented.
+          </p>
+        </div>
+        <div class="stat-card p-8 rv-s" style="transition-delay:.08s">
+          <span class="mono-label text-[var(--navy-tint)]">Step 02</span>
+          <h3 class="h-sm mt-5 text-white">Concept &amp; costing</h3>
+          <p class="mt-4 text-[1rem] leading-[1.7] text-[rgba(201,204,209,.68)]">
+            Two or three viable routes, each with a real bill of quantities — so the decision
+            is made on numbers, not on optimism.
+          </p>
+        </div>
+        <div class="stat-card p-8 rv-s" style="transition-delay:.16s">
+          <span class="mono-label text-[var(--navy-tint)]">Step 03</span>
+          <h3 class="h-sm mt-5 text-white">Detailed engineering</h3>
+          <p class="mt-4 text-[1rem] leading-[1.7] text-[rgba(201,204,209,.68)]">
+            Cross-checked drawings across all four disciplines, released on a schedule your
+            procurement team can plan against.
+          </p>
+        </div>
+        <div class="stat-card p-8 rv-s" style="transition-delay:.24s">
+          <span class="mono-label text-[var(--navy-tint)]">Step 04</span>
+          <h3 class="h-sm mt-5 text-white">Supervision &amp; handover</h3>
+          <p class="mt-4 text-[1rem] leading-[1.7] text-[rgba(201,204,209,.68)]">
+            Stage inspections, snag closure and an as-built set that matches what was actually
+            built on site.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS (light) ===================== -->
+  <section id="projects" class="bg-[var(--paper-alt)] py-[104px] lg:py-[128px] scroll-mt-20">
+    <div class="mx-auto max-w-[1180px] px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="h-lg text-[var(--navy)] rv">Built, Commissioned, Still Running</h2>
+        <p class="lede mt-6 mx-auto max-w-[44rem] text-[rgba(43,47,54,.72)] rv" style="transition-delay:.08s">
+          A selection of plants and lines engineered end to end — from foundation design
+          through load testing and handover.
+        </p>
+        <div class="divider-bar mt-10 rv" style="transition-delay:.16s"></div>
+      </div>
+
+      <div class="mt-16 grid md:grid-cols-3 gap-6">
+        <article class="svc-card overflow-hidden rv-s">
+          <img src="https://placehold.co/800x600/9AA3B0/121A2E?text=Fabrication+Bay" alt="Fabrication bay expansion" class="w-full aspect-[4/3] object-cover" />
+          <div class="p-7">
+            <span class="mono-label text-[rgba(43,47,54,.5)]">Belagavi · 2024</span>
+            <h3 class="h-sm mt-3 text-[var(--dblue)]">Fabrication bay expansion</h3>
+            <p class="mt-3 text-[1rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+              14,000 sq ft steel-frame extension with a 20T EOT crane gantry, delivered from
+              foundation design through load testing.
+            </p>
+          </div>
+        </article>
+
+        <article class="svc-card overflow-hidden rv-s" style="transition-delay:.08s">
+          <img src="https://placehold.co/800x600/9AA3B0/121A2E?text=Substation" alt="Captive substation upgrade" class="w-full aspect-[4/3] object-cover" />
+          <div class="p-7">
+            <span class="mono-label text-[rgba(43,47,54,.5)]">Dharwad · 2023</span>
+            <h3 class="h-sm mt-3 text-[var(--dblue)]">Captive substation upgrade</h3>
+            <p class="mt-3 text-[1rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+              11 kV distribution redesign and protection coordination for a plant running
+              three shifts — cut over with zero production downtime.
+            </p>
+          </div>
+        </article>
+
+        <article class="svc-card overflow-hidden rv-s" style="transition-delay:.16s">
+          <img src="https://placehold.co/800x600/9AA3B0/121A2E?text=Line+Retrofit" alt="Packaging line retrofit" class="w-full aspect-[4/3] object-cover" />
+          <div class="p-7">
+            <span class="mono-label text-[rgba(43,47,54,.5)]">Hubli · 2025</span>
+            <h3 class="h-sm mt-3 text-[var(--dblue)]">Packaging line retrofit</h3>
+            <p class="mt-3 text-[1rem] leading-[1.7] text-[rgba(43,47,54,.72)]">
+              Legacy relay logic replaced with a PLC and SCADA layer, lifting measured line
+              availability from 71% to 92% inside one quarter.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT (dark) ===================== -->
+  <section id="about" class="ink py-[104px] lg:py-[128px] scroll-mt-20">
+    <div class="capsules" aria-hidden="true">
+      <div class="cap-shape" style="width:560px;height:132px;top:120px;right:-210px;transform:rotate(-20deg);opacity:.7;"></div>
+      <div class="cap-shape" style="width:420px;height:110px;bottom:80px;left:-170px;transform:rotate(-24deg);opacity:.6;"></div>
+    </div>
+    <div class="grain"></div>
+
+    <div class="relative z-10 mx-auto max-w-[1180px] px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-y-12 lg:gap-x-16 items-center">
+        <div class="lg:col-span-5 rv-s">
+          <img src="https://placehold.co/720x900/A6ADB8/121A2E?text=Founder" alt="Principal engineer, HubliEngg"
+               class="w-full aspect-[4/5] object-cover rounded-2xl border border-[var(--line-dark)]" />
+        </div>
+
+        <div class="lg:col-span-7">
+          <h2 class="h-lg text-white rv">
+            Signed by the
+            <span class="block text-[var(--navy-tint)]">engineer who checked it</span>
+          </h2>
+          <p class="lede mt-7 max-w-[38rem] text-[rgba(201,204,209,.72)] rv" style="transition-delay:.08s">
+            HubliEngg was founded in 2021 to give industrial clients in North Karnataka the kind
+            of engineering rigour usually reserved for metro-city budgets. Every drawing set that
+            leaves this office is reviewed personally by the principal engineer before it is stamped.
+          </p>
+          <p class="lede mt-5 max-w-[38rem] text-[rgba(201,204,209,.72)] rv" style="transition-delay:.14s">
+            The team stays deliberately small — senior engineers only, no drafting mill — because
+            trust is the product, and it does not scale by headcount.
+          </p>
+
+          <div class="mt-10 grid sm:grid-cols-3 gap-4 rv" style="transition-delay:.2s">
+            <div class="stat-card p-6">
+              <p class="font-mono text-[1.0625rem] text-white whitespace-nowrap">B.E. · M.Tech</p>
+              <p class="mono-label mt-2 !text-[.6875rem] text-[rgba(201,204,209,.55)]">Structural engineering</p>
+            </div>
+            <div class="stat-card p-6">
+              <p class="font-mono text-[1.0625rem] text-white whitespace-nowrap">Chartered</p>
+              <p class="mono-label mt-2 !text-[.6875rem] text-[rgba(201,204,209,.55)]">Institution of Engineers</p>
+            </div>
+            <div class="stat-card p-6">
+              <p class="font-mono text-[1.0625rem] text-white whitespace-nowrap">18 yrs</p>
+              <p class="mono-label mt-2 !text-[.6875rem] text-[rgba(201,204,209,.55)]">Site &amp; design practice</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS (light) ===================== -->
+  <section id="testimonials" class="bg-white py-[104px] lg:py-[128px] scroll-mt-20">
+    <div class="mx-auto max-w-[1180px] px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="h-lg text-[var(--dblue)] rv">What Our Clients Say</h2>
+        <p class="lede mt-6 mx-auto max-w-[44rem] text-[rgba(43,47,54,.7)] rv" style="transition-delay:.08s">
+          Hear from plant heads and directors who have commissioned with HubliEngg.
+        </p>
+      </div>
+
+      <div class="mt-14 grid md:grid-cols-2 gap-6">
+
+        <figure class="quote-card p-7 rv-s">
+          <figcaption class="flex items-center gap-4">
+            <span class="grid place-items-center h-14 w-14 rounded-full bg-[var(--navy-wash)] text-[var(--navy)] font-bold">RK</span>
+            <span>
+              <span class="block font-semibold text-[1.0625rem] text-[var(--dblue)]">R. Kulkarni</span>
+              <span class="block text-[1rem] text-[rgba(43,47,54,.6)]">Plant Head</span>
+            </span>
+          </figcaption>
+          <blockquote class="mt-6 text-[1.0625rem] leading-[1.7] text-[var(--dgrey)]">
+            They found a foundation error in our previous consultant's drawings before we poured
+            a single cubic metre. That one review paid for the entire engagement.
+          </blockquote>
+        </figure>
+
+        <figure class="quote-card p-7 rv-s" style="transition-delay:.06s">
+          <figcaption class="flex items-center gap-4">
+            <span class="grid place-items-center h-14 w-14 rounded-full bg-[rgba(31,74,74,.20)] text-[var(--teal)] font-bold">SD</span>
+            <span>
+              <span class="block font-semibold text-[1.0625rem] text-[var(--dblue)]">S. Deshpande</span>
+              <span class="block text-[1rem] text-[rgba(43,47,54,.6)]">Director</span>
+            </span>
+          </figcaption>
+          <blockquote class="mt-6 text-[1.0625rem] leading-[1.7] text-[var(--dgrey)]">
+            Four disciplines, one point of contact, and drawings that actually agreed with each
+            other. Our commissioning window shortened by three weeks.
+          </blockquote>
+        </figure>
+
+        <figure class="quote-card p-7 rv-s" style="transition-delay:.12s">
+          <figcaption class="flex items-center gap-4">
+            <span class="grid place-items-center h-14 w-14 rounded-full bg-[rgba(28,47,94,.20)] text-[var(--mblue)] font-bold">AP</span>
+            <span>
+              <span class="block font-semibold text-[1.0625rem] text-[var(--dblue)]">A. Patil</span>
+              <span class="block text-[1rem] text-[rgba(43,47,54,.6)]">Operations Lead</span>
+            </span>
+          </figcaption>
+          <blockquote class="mt-6 text-[1.0625rem] leading-[1.7] text-[var(--dgrey)]">
+            The process was hands-off for us, yet the impact was large. They did not just draw
+            it — they stood on site until it was signed off.
+          </blockquote>
+        </figure>
+
+        <figure class="quote-card p-7 rv-s" style="transition-delay:.18s">
+          <figcaption class="flex items-center gap-4">
+            <span class="grid place-items-center h-14 w-14 rounded-full bg-[rgba(224,123,40,.14)] text-[var(--orange)] font-bold">MN</span>
+            <span>
+              <span class="block font-semibold text-[1.0625rem] text-[var(--dblue)]">M. Nadgir</span>
+              <span class="block text-[1rem] text-[rgba(43,47,54,.6)]">Managing Partner</span>
+            </span>
+          </figcaption>
+          <blockquote class="mt-6 text-[1.0625rem] leading-[1.7] text-[var(--dgrey)]">
+            The statutory file was complete on the first submission. Anyone who has waited on a
+            factory licence knows exactly what that is worth.
+          </blockquote>
+        </figure>
+
+        <figure class="quote-card p-7 rv-s" style="transition-delay:.24s">
+          <figcaption class="flex items-center gap-4">
+            <span class="grid place-items-center h-14 w-14 rounded-full bg-[var(--navy-wash)] text-[var(--navy)] font-bold">VJ</span>
+            <span>
+              <span class="block font-semibold text-[1.0625rem] text-[var(--dblue)]">V. Joshi</span>
+              <span class="block text-[1rem] text-[rgba(43,47,54,.6)]">CTO</span>
+            </span>
+          </figcaption>
+          <blockquote class="mt-6 text-[1.0625rem] leading-[1.7] text-[var(--dgrey)]">
+            They made a complex retrofit easy to understand and easy to approve internally.
+            A genuinely hands-on team.
+          </blockquote>
+        </figure>
+
+        <figure class="quote-card p-7 rv-s" style="transition-delay:.3s">
+          <figcaption class="flex items-center gap-4">
+            <span class="grid place-items-center h-14 w-14 rounded-full bg-[rgba(31,74,74,.20)] text-[var(--teal)] font-bold">KH</span>
+            <span>
+              <span class="block font-semibold text-[1.0625rem] text-[var(--dblue)]">K. Hiremath</span>
+              <span class="block text-[1rem] text-[rgba(43,47,54,.6)]">Head of Maintenance</span>
+            </span>
+          </figcaption>
+          <blockquote class="mt-6 text-[1.0625rem] leading-[1.7] text-[var(--dgrey)]">
+            Constant support and clarity through the whole job. The as-built set actually
+            matches the plant, which is rarer than it should be.
+          </blockquote>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA (dark, glow) ===================== -->
+  <section id="contact" class="relative bg-[var(--ink)] overflow-hidden py-[128px] lg:py-[168px] scroll-mt-20">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+         style="background:radial-gradient(520px 330px at 50% 26%, rgba(58,70,224,.6), rgba(0,0,128,.28) 42%, transparent 72%);"></div>
+    <div class="absolute left-1/2 -translate-x-1/2 top-[16%] h-px w-[300px] pointer-events-none" aria-hidden="true"
+         style="background:linear-gradient(90deg, transparent, var(--navy-tint), transparent); box-shadow:0 0 18px 2px rgba(167,173,230,.6);"></div>
+    <div class="grain"></div>
+
+    <div class="relative z-10 mx-auto max-w-[1180px] px-6 lg:px-8 text-center">
+      <h2 class="h-xl text-white max-w-[54rem] mx-auto rv">
+        <span class="block">Transform Your Operations</span>
+        <span class="block text-[var(--navy-tint)]">with Precision Engineering</span>
+      </h2>
+      <p class="lede mt-7 mx-auto max-w-[38rem] text-[rgba(201,204,209,.68)] rv" style="transition-delay:.08s">
+        Send drawings, a site photo, or just a paragraph. You'll get a scoped response from an
+        engineer within two working days.
+      </p>
+      <div class="mt-11 flex flex-wrap items-center justify-center gap-4 rv" style="transition-delay:.16s">
+        <a href="mailto:studio@hubliengg.example" class="btn btn-solid">Book a call <span class="arw">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="relative overflow-hidden" style="background:linear-gradient(90deg, #0A0D1A 0%, var(--dblue) 34%, var(--mblue) 62%, var(--navy) 100%);">
+  <div class="relative z-10 mx-auto max-w-[1180px] px-6 lg:px-8 pt-20 pb-10">
+    <div class="grid md:grid-cols-2 gap-y-14 md:gap-x-16 lg:gap-x-24">
+
+      <div>
+        <img src="brand_assets/brand_logo.png" alt="HubliEngg" class="h-10 w-auto -ml-1" />
+        <p class="mt-6 max-w-[26rem] text-[1.0625rem] leading-[1.7] text-[rgba(255,255,255,.75)]">
+          Multi-discipline engineering consultancy for established industry — structural,
+          mechanical, electrical and automation under one accountable roof.
+        </p>
+        <div class="mt-7 flex items-center gap-5">
+          <a href="#contact" aria-label="LinkedIn" class="text-white/85 transition-[transform,color] duration-300 hover:text-white hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-4 rounded-sm">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8.2h4.9V24H.5V8.2Zm7.9 0h4.7v2.2h.07c.65-1.2 2.25-2.5 4.63-2.5 4.95 0 5.87 3.1 5.87 7.2V24h-4.9v-7.9c0-1.9-.04-4.3-2.7-4.3-2.7 0-3.11 2-3.11 4.16V24H8.4V8.2Z"/></svg>
+          </a>
+          <a href="mailto:studio@hubliengg.example" aria-label="Email" class="text-white/85 transition-[transform,color] duration-300 hover:text-white hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-4 rounded-sm">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4.5" width="20" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg>
+          </a>
+          <a href="tel:+910000000000" aria-label="Phone" class="text-white/85 transition-[transform,color] duration-300 hover:text-white hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-4 rounded-sm">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2 4.5 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.2 2 2 0 0 1 6.5 3Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-[1.25rem] font-bold text-white">Capabilities</h3>
+        <ul class="mt-6 space-y-4">
+          <li><a href="#capabilities" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Structural &amp; Civil</a></li>
+          <li><a href="#capabilities" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Mechanical &amp; Fabrication</a></li>
+          <li><a href="#capabilities" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Electrical &amp; Instrumentation</a></li>
+          <li><a href="#capabilities" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Industrial Automation</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[1.25rem] font-bold text-white">Company</h3>
+        <ul class="mt-6 space-y-4">
+          <li><a href="#top" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Home</a></li>
+          <li><a href="#process" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Process</a></li>
+          <li><a href="#projects" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Projects</a></li>
+          <li><a href="#testimonials" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">Testimonials</a></li>
+          <li><a href="#about" class="u-link text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">About Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-[1.25rem] font-bold text-white">Contact</h3>
+        <ul class="mt-6 space-y-4">
+          <li>
+            <a href="mailto:studio@hubliengg.example" class="u-link inline-flex items-center gap-3 text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="shrink-0"><rect x="2" y="4.5" width="20" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg>
+              studio@hubliengg.example
+            </a>
+          </li>
+          <li>
+            <a href="tel:+910000000000" class="u-link inline-flex items-center gap-3 text-[1.0625rem] text-[rgba(255,255,255,.82)] hover:text-white">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="shrink-0"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2 4.5 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.2 2 2 0 0 1 6.5 3Z"/></svg>
+              +91 00000 00000
+            </a>
+          </li>
+          <li class="flex items-start gap-3 text-[1.0625rem] leading-[1.7] text-[rgba(255,255,255,.82)]">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="shrink-0 mt-1"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <span>Vidyanagar, Hubli<br />Karnataka 580021, India</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 h-px bg-[rgba(255,255,255,.16)]"></div>
+    <div class="pt-7 flex flex-wrap items-center justify-between gap-4">
+      <p class="text-[.95rem] text-[rgba(255,255,255,.7)]">© 2026 HubliEngg. All rights reserved.</p>
+      <p class="mono-label !text-[.6875rem] text-[rgba(255,255,255,.6)]">Bold · Precise · Engineered for trust</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- mobile navigation ----------------------------------------------
+  const menuBtn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const setMenu = (open) => {
+    menu.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', String(open));
+  };
+  menuBtn.addEventListener('click', () => setMenu(menu.hidden));
+  menu.querySelectorAll('[data-close]').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  // ---- scroll reveals -------------------------------------------------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.rv, .rv-s').forEach((el) => io.observe(el));
+
+  // hero animates on load rather than on scroll
+  requestAnimationFrame(() => {
+    document.querySelectorAll('main > section:first-of-type .rv').forEach((el) => el.classList.add('is-in'));
+  });
+
+  // ---- count-up stats -------------------------------------------------
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      cio.unobserve(el);
+      const to = Number(el.dataset.to);
+      if (reduce) { el.textContent = String(to); return; }
+      const dur = 1500;
+      const start = performance.now();
+      const tick = (now) => {
+        const p = Math.min((now - start) / dur, 1);
+        el.textContent = Math.round(easeOut(p) * to).toString();
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.count').forEach((el) => cio.observe(el));
+</script>
+</body>
+</html>
